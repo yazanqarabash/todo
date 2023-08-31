@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import {
@@ -24,11 +24,9 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const registerForm = useRef(null);
-
   const switchToLogin = () => {
-    resetRegisterErrors(); // Reset login errors when switching to Register
-    navigate("/login"); // Add your navigation logic
+    resetRegisterErrors();
+    navigate("/login");
   };
 
   const handleSubmit = (event) => {

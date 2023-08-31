@@ -1,33 +1,4 @@
 {
-  "tasks": [
-    {
-      "id": 3,
-      "title": "fdsfdsfdsfs1212",
-      "body": "fdsfdsfdsf"
-    },
-    {
-      "id": 6,
-      "title": "4567gg",
-      "body": "4567777"
-    },
-    {
-      "id": 7,
-      "title": "12133",
-      "body": "treyeryer"
-    }
-  ],
-  "users": [
-    {
-      "id": 1,
-      "name": "Yazan Qarabash",
-      "email": "yazan@cybersaurus.net",
-      "password": "12345"
-    },
-    {
-      "name": "Firas Alwarea",
-      "email": "firas@gmail.com",
-      "password": "fdlskah13421A",
-      "id": 2
-    }
-  ]
+  "tasks": [],
+  "users": []
 }

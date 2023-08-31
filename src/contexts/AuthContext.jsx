@@ -20,11 +20,9 @@ export const AuthProvider = ({ children }) => {
 
   const loginUser = (userInfo) => {
     setLoading(true);
-    console.log("loginUserContext", userInfo, "eror", loginErrors);
     getUserByEmail(userInfo.email)
       .then((userData) => {
         const validationErrors = validateLogin(userData, { ...userInfo });
-        console.log("valid login or not", validationErrors);
         if (Object.keys(validationErrors).length === 0) {
           setUser(userData);
           localStorage.setItem("user", JSON.stringify(userData));
@@ -43,50 +41,23 @@ export const AuthProvider = ({ children }) => {
 
   const logoutUser = () => {
     localStorage.removeItem("user");
-    setUser({});
+    setUser([]);
+    navigate("/login");
   };
 
   const handleLogin = () => {
     navigate("/login");
   };
 
-  // const registerUser = async (userInfo) => {
-  //   setLoading(true);
-  //   resetRegisterErrors();
-  //   try {
-  //     const userData = await getUserByEmail(userInfo.email);
-  //     const validationErrors = validateRegister(userData, { ...userInfo });
-  //     console.log("registerUserContext", userInfo, "eror", registerErrors);
-  //     if (Object.keys(validationErrors).length === 0) {
-  //       console.log("valid register", userInfo, "eror", registerErrors);
-  //       const newUser = await createUser(userInfo);
-  //       setUser(newUser);
-  //       localStorage.setItem("user", JSON.stringify(newUser));
-  //       setLoading(false);
-  //       navigate("/");
-  //     } else {
-  //       setLoading(false);
-  //       setRegisterErrors(validationErrors);
-  //     }
-  //   } catch (error) {
-  //     setLoading(false);
-  //     console.error("Failed to registerUser: ", error);
-  //   }
-  // };
-
   const registerUser = (userInfo) => {
     setLoading(true);
     resetRegisterErrors();
-    console.log("resgisterContext123", userInfo, "eror", loginErrors);
     getUserByEmail(userInfo.email).then((userData) => {
       const validationErrors = validateRegister(userData, { ...userInfo });
-      console.log("registerUserContext", userInfo, "eror", validationErrors);
-      console.log("check errors, ", validationErrors ? "true" : "false");
       if (Object.keys(validationErrors).length === 0) {
-        console.log("valid register", userInfo, "eror", registerErrors);
         createUser(userInfo)
           .then((userData) => {
-            setUser(userData);
+            setUser([userData]);
             localStorage.setItem("user", JSON.stringify(userData));
             setLoading(false);
             navigate("/");
@@ -138,14 +109,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={contextData}>
-      {children}
-      {/* {loading && !loginErrors && !registerErrors ? (
-        <p>Loading...</p>
-      ) : (
-        children
-      )} */}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
   );
 };
 

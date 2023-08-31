@@ -6,33 +6,59 @@ import { validateTask } from "../helpers/validateTask";
 import Task from "./Task";
 import ViewTask from "./ViewTask";
 import ManageTaskModal from "./ManageTaskModal";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 function TasksList() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [viewOpen, setViewOpen] = useState(false);
-  const [task, setTask] = useState({ id: null, title: "", body: "" });
+  const [task, setTask] = useState({
+    id: null,
+    title: "",
+    body: "",
+    userId: null,
+  });
   const [errors, setErrors] = useState([]);
 
+  const { user } = useAuth();
+
+  const navigate = useNavigate();
+
   useEffect(() => {
-    getTasks()
-      .then((tasks) => {
-        setTasks(tasks);
-      })
-      .catch((error) => {
-        setErrors(error.response.data);
-        console.error(("Failed to GetTasks: ", error));
-      })
-      .finally(() => setLoading(false));
-  }, []);
+    const fetchData = async () => {
+      if (user && user.length > 0) {
+        try {
+          const tasks = await getTasks();
+          const userTasks = tasks.filter((task) => task.userId === user[0].id);
+          setTasks(userTasks);
+        } catch (error) {
+          setErrors(error.response.data);
+          console.error("Failed to GetTasks: ", error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        // Handle the case where user data is not available
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [user]);
 
   const handleTask = (event) => {
-    const { name, value } = event.target;
-    setTask((prevText) => ({
-      ...prevText,
-      [name]: value,
-    }));
+    if (user && user.length > 0) {
+      const { name, value } = event.target;
+      setTask((prevText) => ({
+        ...prevText,
+        [name]: value,
+        userId: user[0].id,
+      }));
+    } else {
+      navigate("/login");
+    }
   };
 
   const handleClickOpen = () => {
@@ -68,7 +94,6 @@ function TasksList() {
       .then(() => {
         const remainedTasks = tasks.filter((task) => task.id !== taskId);
         setTasks(remainedTasks);
-        console.log(taskId, ": task deleted!");
       })
       .catch((error) => {
         setErrors(error.response.data);
@@ -85,7 +110,7 @@ function TasksList() {
         editTask(task)
           .then((editedTask) => {
             const updatedTasks = tasks.map((item) =>
-              item.id === editedTask.id ? editedTask : item,
+              item.id === editedTask.id ? editedTask : item
             );
             setTasks(updatedTasks);
             handleResetTaskField();
@@ -114,8 +139,6 @@ function TasksList() {
       setErrors(validationErrors);
     }
   };
-
-  // use errors state for loading in case of getTasks
 
   if (loading && tasks.length === 0) {
     return <div>Loading tasks...</div>;

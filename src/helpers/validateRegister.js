@@ -1,8 +1,6 @@
 export function validateRegister(userData, { name, email, password }) {
   const errors = {};
 
-  console.log("userData:", userData);
-
   if (!name) {
     errors.name = "Enter a valid name.";
   }
@@ -23,12 +21,8 @@ export function validateRegister(userData, { name, email, password }) {
     errors.user = "User with this email already exists.";
   }
 
-  if (password || !/\s/.test(password)) {
-    const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-    const is_password_valid = pattern.test(password);
-    if (!is_password_valid) {
-      errors.password = "Password is invalid.";
-    }
+  if (!password || /\s/.test(password)) {
+    errors.password = "Password is invalid.";
   }
 
   return errors;

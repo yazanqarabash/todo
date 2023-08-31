@@ -10,7 +10,6 @@ export async function handleResponse(response) {
   switch (response.status) {
     case 200: // ok
     case 201: // created
-    console.log("res", response);
       data = await response.data;
       return data;
     case 404: // not found

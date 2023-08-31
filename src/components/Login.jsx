@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import {
@@ -22,7 +22,6 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-  // const loginForm = useRef(null);
 
   useEffect(() => {
     if (Object.keys(user).length !== 0) {
@@ -31,8 +30,8 @@ function Login() {
   });
 
   const switchToRegister = () => {
-    resetLoginErrors(); // Reset login errors when switching to Register
-    navigate("/register"); // Add your navigation logic
+    resetLoginErrors();
+    navigate("/register");
   };
 
   const handleSubmit = (event) => {
@@ -41,9 +40,6 @@ function Login() {
       email: email,
       password: password,
     };
-
-    console.log("handle login,", userInfo);
-
     loginUser(userInfo);
   };
 
