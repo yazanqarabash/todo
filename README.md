@@ -2,6 +2,21 @@
 
 Simple to do list project that displays user related tasks from API. User can register an account or log in to view, edit or delete tasks.
 
+## Screenshots
+Here is a taste of how the web application looks like: \
+– _photos taken with GoFullPage_
+
+<div style="display: flex; flex-direction: row; gap: 10px;">
+  <div style="display: flex; flex-direction: column; gap: 25px;">
+    <img src="https://github.com/user-attachments/assets/6ebd7db5-fab8-42f6-bda0-e297ecaab25f" alt="Details Page" width="400" height="250"/>
+    <img src="https://github.com/user-attachments/assets/e47d81cc-33b5-4674-bd75-adf59c44f8a2" alt="Chocolates Page" width="400" height="250"/>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 25px;">
+    <img src="https://github.com/user-attachments/assets/3ad02f5c-4ed8-4b91-a59a-c906adbfb9aa" alt="Login Page" width="400" height="250"/>
+    <img src="https://github.com/user-attachments/assets/7a52e93c-8ba5-4f39-b3fb-c07dd3d43573" alt="Register Page" width="400" height="250"/>
+  </div>
+</div>
+
 # Initial Setup
 
 * Clone repo and then go to project folder `cd /cs-todo`
